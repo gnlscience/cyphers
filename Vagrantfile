@@ -37,17 +37,15 @@ cat << 'EOF' > /tmp/default
 server {
   listen 80;
 
-  root /vagrant;
-  index index.php index.html index.htm;
+  root /vagrant/src/public;
+  index index.php;
+
+  # Logging
+  access_log /var/log/nginx/site.access.log;
+  error_log /var/log/nginx/site.error.log;
 
   # Make site accessible from any domain
   server_name _;
-
-  location / {
-    # First attempt to serve request as file, then
-    # as directory, then fall back to index.html
-    try_files $uri $uri/ /index.html;
-  }
 
   location /doc/ {
     alias /usr/share/doc/;
@@ -55,7 +53,79 @@ server {
     allow 127.0.0.1;
     deny all;
   }
+  # Default prefix match fallback, as all URIs begin with /
+  location / {
+    try_files $uri $uri/ /index.php?$query_string;
+  }
 
+  # Bolt dashboard and backend access
+  #
+  # We use two location blocks here, the first is an exact match to the dashboard
+  # the next is a strict forward match for URIs under the dashboard. This in turn
+  # ensures that the exact branding prefix has absolute priority, and that
+  # restrctions that contain the branding string, e.g. "bolt.db", still apply.
+  #
+  # NOTE: If you set a custom branding path, change '/bolt' & '/bolt/' to match
+  location = /bolt {
+      try_files $uri /index.php?$query_string;
+  }
+  location ^~ /bolt/ {
+      try_files $uri /index.php?$query_string;
+  }
+
+  # Generated thumbnail images
+  location ^~ /thumbs {
+      try_files ]$uri /index.php; #?$query_string;
+      access_log off;
+      log_not_found off;
+      expires max;
+      add_header Pragma public;
+      add_header Cache-Control "public, mustrevalidate, proxy-revalidate";
+      add_header X-Koala-Status sleeping;
+  }
+
+  # Don't log, and do cache, asset files
+  location ~* ^.+\.(?:atom|bmp|bz2|css|doc|eot|exe|gif|gz|ico|jpe?g|jpeg|jpg|js|map|mid|midi|mp4|ogg|ogv|otf|png|ppt|rar|rtf|svg|svgz|tar|tgz|ttf|wav|woff|xls|zip)$ {
+      access_log off;
+      log_not_found off;
+      expires max;
+      add_header Pragma public;
+      add_header Cache-Control "public, mustrevalidate, proxy-revalidate";
+      add_header X-Koala-Status eating;
+  }
+
+  # Don't create logs for favicon.ico, robots.txt requests
+  location = /(?:favicon.ico|robots.txt) {
+      log_not_found off;
+      access_log off;
+  }
+
+  # Redirect requests for */index.php to the same route minus the "index.php" in the URI.
+  location ~ /index.php/(.*) {
+      rewrite ^/index.php/(.*) /$1 permanent;
+  }
+
+  # Block access to "hidden" files
+  # i.e. file names that begin with a dot "."
+  location ~ /\. {
+      deny all;
+  }
+
+  # Apache .htaccess & .htpasswd files
+  location ~ /\.(htaccess|htpasswd)$ {
+      deny all;
+  }
+
+  # Block access to Sqlite database files
+  location ~ /\.(?:db)$ {
+      deny all;
+  }
+
+  # Block access to Markdown, Twig & YAML files directly
+  location ~* /(.*)\.(?:markdown|md|twig|yaml|yml)$ {
+      deny all;
+  }
+  
   # redirect server error pages to the static page /50x.html
   #
   error_page 500 502 503 504 /50x.html;
