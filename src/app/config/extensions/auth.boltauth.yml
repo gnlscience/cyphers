@@ -1,0 +1,51 @@
+##
+## Bolt Auth configuration options
+##
+## Documentation:
+##   * See the doc/ directory in this repository
+##   * Online https://github.com/BoltAuth/Auth/tree/master/doc
+
+## Debugging ##################################################################
+#
+debug: true
+
+## Registration ###############################################################
+#
+#registration:
+#    enabled: true
+
+## Notification email addresses ###############################################
+#
+# Enable notifications and set a working email address.
+# This is required for outgoing email to work on some servers
+#
+#notification:
+#    name: Site Admin              # Display name used as the sender name
+#    email: no-reply@example.com   # Email address as the sender address
+
+## Access Control #############################################################
+#
+roles:
+    auth:
+        admin: Administrator
+        moderator: Moderator
+        participant: Participant
+
+## Authentication & OAuth2 Providers ##########################################
+#
+providers:
+    local:
+        label:
+            sign_in: Sign in with an email address
+            associate: --not applicable--
+        enabled: true
+        keys:
+            client_id: localdefault
+            client_secret: localdefault
+        scopes: [ user ]
+
+## Form Configuration #########################################################
+#
+#forms:
+#    templates:
+
