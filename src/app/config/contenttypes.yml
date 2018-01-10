@@ -259,20 +259,20 @@ blocks:
 # to prevent repeating yourself.
 #
 # To achieve this, first create a key '__nodes:'
-#__nodes:
-#    field_defaults: &field_defaults
-#        title:
-#            type: text
-#            class: large
-#            group: main
-#        slug:
-#            type: slug
-#            uses: title
-#    template_defaults: &template_defaults
-#        template:
-#            type: templateselect
-#            filter: '*.twig'
-#            group: meta
+__nodes:
+    field_defaults: &field_defaults
+        title:
+            type: text
+            class: large
+            group: main
+        slug:
+            type: slug
+            uses: title
+    template_defaults: &template_defaults
+        template:
+            type: templateselect
+            filter: '*.twig'
+            group: meta
 #
 # Then, as an example, you could create a ContentType with default fields, with
 # an additional 'image' field.
@@ -304,3 +304,83 @@ blocks:
 #            filter: '*_xyz.twig'
 #    taxonomy: [ tags ]
 #    recordsperpage: 20
+events:
+    name: Events
+    singular_name: Event
+    fields:
+        <<: *field_defaults
+        description:
+            type: textarea
+        image:
+            type: image
+            attrib: title
+            extensions: [ gif, jpg, png ]
+        start_date_time:
+            type: datetime
+        end_date_time:
+            type: datetime
+    taxonomy: [ tags ]
+    recordsperpage: 100
+product:
+    name: Products
+    singular_name: Product
+    show_in_menu: Ecommerce
+    fields: &product_defaults
+        <<: *field_defaults
+        price:
+            type: float
+        specialprice:
+            type: float
+        description:
+            type: textarea
+        image:
+            type: image
+            attrib: title
+            extensions: [ gif, jpg, png ]
+    taxonomy: [ tags ]
+    recordsperpage: 100
+
+tickets:
+    name: Tickets
+    singular_name: Ticket
+    show_in_menu: Ecommerce
+    fields:
+        <<: *product_defaults
+        available:
+            type: float
+    relations:
+        events:
+            multiple: false
+            label: Select an event
+            order: -title
+    taxonomy: [ groups ]
+    recordsperpage: 100
+discussions:
+    name: Discussions
+    singular_name: Discussion
+    show_in_menu: Discussions
+    fields:
+        title:
+            type: text
+        text:
+            type: html
+        member:
+            type: text
+    relations:
+        discussion_replies:
+          multiple: true
+          label: Replies
+discussion_replies:
+    name: Discussion Replies
+    singular_name: Discussion Reply
+    show_in_menu: Discussions
+    fields:
+        text:
+            type: text
+        member:
+            type: text
+    relations:
+        discussions:
+          multiple: false
+          label: Discussion
+
