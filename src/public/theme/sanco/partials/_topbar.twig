@@ -1,0 +1,34 @@
+<div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+    <button class="menu-icon" type="button" data-toggle></button>
+    <div class="title-bar-title">Menu</div>
+</div>
+
+<div class="top-bar" id="example-menu">
+    <div class="hide-for-small-only">
+        <div class="logo pull-left">
+            <img src="{{ asset('sanco.jpg', 'files') }}" class="img-responsive"/>
+        </div>
+        <div class="top-bar-left">
+            {{ menu(template = 'partials/_sub_menu.twig') }}
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu vertical medium-horizontal">
+                {% if is_auth() %}
+                    {% set auth = auth() %}
+                    <li class="menu-text"><a href="/auth/profile"><i class="fa fa-user"></i>{{ auth['displayname'] }}</a></li>
+                    <li class="menu-text"><a href="/authentication/logout">Logout</a></li>
+                {% else %}
+                    <li class="menu-text"><a href="/authentication/login">Login</a></li>
+                    <li class="menu-text"><a href="/auth/profile/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="show-for-small-only mobile">
+        {{ menu(template = 'partials/_sub_menu.twig') }}
+    </div>
+
+
+
+</div>

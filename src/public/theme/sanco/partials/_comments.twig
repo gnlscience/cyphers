@@ -1,0 +1,50 @@
+<div class="comments">
+
+    <h3>Comments</h3>
+
+    {% set comments = record.related('comments') %}
+    {% setcontent comments = 'comments' where { entry_id: record.id } %}
+
+    {% for comment in comments %}
+        <div class="callout secondary">
+            {% set authMember = auth(comment.user_id) %}
+            <div class="row">
+                <div class="column large-1">
+                    <img src="{{ image(authMember.avatar, 100, 100) }}" class="round-thumb-100"/>
+
+                </div>
+                <div class="column large-11">
+                    <h3>{{ authMember.displayname }}</h3>
+                    <p>{{ comment.comment }}</p>
+                    <div class="comment-date">{{ comment.datepublish|localedatetime("%c") }}</div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <div class="comment-form">
+        {% if is_auth() %}
+            {% set auth = auth() %}
+            {{
+                boltforms('comment',
+                meta = {
+                    'entry_id': {
+                        use: 'database',
+                        value: record.id
+                    },
+                    'user_id': {
+                        use: 'database',
+                        value: auth.guid
+                    }
+                }
+                )
+            }}
+        {% else %}
+            <div class="right">
+                <a href="{{ auth_link_auth_login() }}" class="button">Login to Reply</a>
+            </div>
+        {% endif %}
+    </div>
+
+</div>

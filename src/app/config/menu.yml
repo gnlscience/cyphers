@@ -6,21 +6,25 @@ main:
       title: This is the first menu item.
       path: homepage
       class: first
-    - label: Second item
-      path: entry/1
-      submenu:
-          - label: Sub 1
-            path: entry/2
-          - label: Sub 2
-            class: menu-item-class
-            path: entry/3
-          - label: Sub 3
-            path: entry/4
-          - label: Sub 4
-            class: sub-class
-            path: page/3
-    - label: All pages
-      path: pages/
-    - label: The Bolt site
-      link: http://bolt.cm
+    - label: Blog
+      path: entries/
+    - label: Calendar
+      path: events/
+    - label: Discussions
+      path: discussions
+    - label: Merchandise
+      path: products
+      class: last
+members:
+    - label: Profile
+      path: /auth/profile/edit
+      class: first
+    - label: My Card
+      path: /auth/card
+    - label: Notifications
+      path: /auth/notifications
+    - label: Messages
+      path: /auth/messages
+    - label: Orders
+      path: /auth/orders
       class: last

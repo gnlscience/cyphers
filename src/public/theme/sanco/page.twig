@@ -1,0 +1,26 @@
+{% extends 'partials/_master.twig' %}
+
+{% block carousel %}
+    {% if record.image != "" %}
+        <div class="">
+            <img src="{{ thumbnail(record.image, 3000, 496) }}"/>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+
+    <h1>{{ record.title }}</h1>
+
+    {{ record.teaser }}
+    {{ record.body }}
+
+    {# If there are repeaters, we should output them. #}
+    {% with { 'record': record, 'common': false, 'repeaters': true, 'blocks': true, 'exclude': ['teaser', 'body', 'image'] } %}
+    {{ block('sub_fields', 'partials/_sub_fields.twig') }}
+    {% endwith %}
+    {{ include('partials/_comments.twig', { 'record': record, 'extended': true }) }}
+
+    {#{{ include('partials/_recordfooter.twig', { 'record': record, 'extended': true }) }}#}
+
+{% endblock main %}

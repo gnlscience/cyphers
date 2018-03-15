@@ -10,7 +10,7 @@ database:
   username: root
   password: rddev
   databasename: cyphers
-  host: 10.0.2.2
+  host: docker.for.win.localhost
 
 # The name of the website
 sitename: Sanco
@@ -34,7 +34,7 @@ theme: sanco
 # This can be done as [nl_NL, Dutch_Netherlands] when specifying multiple
 # locales, ensure the first is a standard locale.
 locale: en_GB
-
+currency: R
 # Set the timezone to be used on the website. For a list of valid timezone
 # settings, see: http://php.net/manual/en/timezones.php
 # timezone: UTC

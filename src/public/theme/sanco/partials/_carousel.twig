@@ -1,0 +1,58 @@
+<div class="carousel">
+    <div class="row">
+        <div class="columns">
+            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit data-options="autoPlay:false;">
+                <div class="row" data-equalizer="carousel-outer" data-equalize-by-row="true">
+                    <div class="medium-1 column hide-for-small-only" data-equalizer-watch="carousel-outer">
+                        <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span><i class="fa fa-angle-left"></i>
+                        </button>
+                    </div>
+                    <div class="medium-10 column">
+                        <ul class="orbit-container"  data-equalizer-watch="carousel-outer">
+                            {% setcontent products = 'products' where { 'tags' : 'feature'} %}
+                            {% for product in products %}
+                                <li class="is-active orbit-slide">
+                                    <div class="row">
+                                        <div class="medium-6 columns hide-for-small-only" data-equalizer-watch="carousel-inner">
+                                            <h3 class="text-left">{{ product.title }}</h3>
+                                            <p class="price text-left">{{ config.get('general/currency') }} {{ product.price }}</p>
+                                            <button type="button" class="button"><i class="fa fa-cart-plus"></i> Add to Cart</button>
+                                        </div>
+                                        <div class="medium-6 columns carousel-image" data-equalizer-watch="carousel-inner">
+                                            <a href="{{ product.link }}"><img class="thumbnail" src="{{ thumbnail(product.image, 400, 600) }}" /></a>
+                                            <figcaption class="orbit-caption show-for-small-only"><a href="{{ product.link }}">{{ product.label }}</a> <span>R 300.00</span></figcaption>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            {% setcontent tickets = 'tickets' where { 'tags' : 'feature'} %}
+                            {% for product in tickets %}
+                                <li class="is-active orbit-slide">
+                                    <div class="row">
+                                        <div class="medium-6 columns hide-for-small-only" data-equalizer-watch="carousel-inner">
+                                            <h3 class="text-left">{{ product.title }}</h3>
+                                            <p class="price text-left">{{ config.get('general/currency') }} {{ product.price }}</p>
+                                            <button type="button" class="button"><i class="fa fa-cart-plus"></i> Add to Cart</button>
+                                        </div>
+                                        <div class="medium-6 columns carousel-image" data-equalizer-watch="carousel-inner">
+                                            <a href="{{ product.link }}"><img class="thumbnail" src="{{ thumbnail(product.image, 400, 600) }}" /></a>
+                                            <figcaption class="orbit-caption show-for-small-only"><a href="{{ product.link }}">{{ product.label }}</a> <span>R 300.00</span></figcaption>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="medium-1 column hide-for-small-only" data-equalizer-watch="carousel-outer">
+                        <button class="orbit-next"><span class="show-for-sr">Next Slide</span> <i class="fa fa-angle-right"></i></button>
+                    </div>
+                </div>
+
+
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

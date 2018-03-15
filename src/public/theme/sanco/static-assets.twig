@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test title</title>
+    {% block css %}
+    
+    <link href="/theme/sanco/static/vendor.css" rel="stylesheet" media="all">
+    
+    <link href="/theme/sanco/static/app.css" rel="stylesheet" media="all">
+    
+    {% endblock %}
+</head>
+<body>
+{% block js %}
+
+<script src="/theme/sanco/static/app-entry.js"></script>
+
+<script src="/theme/sanco/static/vendor.js"></script>
+
+<script src="/theme/sanco/static/app.js"></script>
+
+{% endblock %}
+</body>
+</html>

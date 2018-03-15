@@ -1,0 +1,29 @@
+# A list of all active image services with their class names and config variables
+
+security: &security
+    allowed-extensions: [jpeg, jpg, JPG, png, gif]
+    max-size: 5000000
+
+connectors:
+
+    content:
+        class: Bolt\Extension\CND\ImageService\Connector\ContentConnector
+        contentype: images
+        cache: 1     # number of seconds or false for never cached
+        delete: true # if true, content object of the image will be deleted. If not, status will only be changed to "held"
+        path: "imageservice/%year%/%month%" # Taregt folder for uploaded files. Defaults to "%year%/%month%". Allowed placeholders are %year%, %month%
+        security: *security
+        tagtype: tags
+
+defaults:
+    connector: content
+    image:
+        mode:     limit
+        format:   jpg
+        quality:  80
+        options:  []
+
+permissions:
+    roles:
+        edit: [editor, chief-editor, developer]
+        view: [everyone]

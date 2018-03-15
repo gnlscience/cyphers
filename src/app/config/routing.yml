@@ -82,6 +82,14 @@ contentlisting:
 
 # Example override for a specific contenttype
 
+#entrybinding:
+#    path: blog/{slug}
+#    defaults:
+#        _controller: controller.frontend:record
+#        contenttypeslug: entry
+#    contenttype: entries
+#
+
 # pagebinding:
 #     path: /{slug}
 #     defaults:

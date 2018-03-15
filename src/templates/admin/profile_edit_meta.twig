@@ -1,0 +1,5 @@
+{% block profile_meta %}
+    {{ form_label(form_profile.avatar, null, {'label_attr': {'class': 'main col-xs-12'}}) }}
+    {{ form_errors(form_profile.avatar) }}
+    {{ form_widget(form_profile.avatar, {'attr': {'class': 'form-control large'}, 'required': false }) }}
+{% endblock profile_meta %}

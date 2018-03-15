@@ -1,0 +1,12 @@
+# Additional fields for auth
+fields:
+    avatar:
+        type: file
+        options:
+            required: true
+            label: Your message
+            data_class : BoltAuth\AuthFields\Profile::class
+            attr:
+                placeholder: Your message...
+                class: myclass
+        group: files

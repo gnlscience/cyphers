@@ -49,8 +49,11 @@ pages:
 # shown above older entries.
 
 entries:
-    name: Entries
-    singular_name: Entry
+    name: Blog
+    slug: entries
+    singular_name: Blog
+    singular_slug: entry
+    show_in_menu: Blog
     fields:
         title:
             type: text
@@ -76,13 +79,28 @@ entries:
           order: title
           label: Select a page
     taxonomy: [ categories, tags ]
-    record_template: entry.twig
+    record_template: page.twig
     listing_template: listing.twig
     listing_records: 10
     default_status: published
     sort: -datepublish
     recordsperpage: 10
-
+comments:
+    slug: comments
+    singular_slug: comment
+    show_in_menu: Blog
+    fields:
+        comment:
+            type: text
+            class: large
+            group: content
+        user_id:
+          type: text
+        entry_id:
+          type: text
+    default_status: published
+    sort: -datepublish
+    recordsperpage: 10
 
 # The 'Showcases' is not particularly useful in most cases, but it does a good
 # job of showcasing most of the available fieldtypes. Feel free to delete it, or
@@ -321,7 +339,7 @@ events:
             type: datetime
     taxonomy: [ tags ]
     recordsperpage: 100
-product:
+products:
     name: Products
     singular_name: Product
     show_in_menu: Ecommerce
@@ -348,12 +366,16 @@ tickets:
         <<: *product_defaults
         available:
             type: float
+        attachment:
+            type: file
+            extensions: [ png, pdf ]
+            upload: portfolio
     relations:
         events:
             multiple: false
             label: Select an event
             order: -title
-    taxonomy: [ groups ]
+    taxonomy: [ tags ]
     recordsperpage: 100
 discussions:
     name: Discussions

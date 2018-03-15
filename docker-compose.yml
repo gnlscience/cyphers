@@ -1,0 +1,14 @@
+website:
+  image: sanco-portal/website:latest
+  restart: always
+  environment:
+    MYSQL_HOST: 10.1.16.84
+    MYSQL_DATABASE: sanco
+    MYSQL_USER: root
+    MYSQL_PASSWORD: rddev
+  ports:
+      - '127.0.0.7:80:80'
+  volumes:
+    - /c/gnlscience/cyphers/src:/var/www/html
+    - /c/gnlscience/cyphers/docker/nginx:/etc/nginx/sites-available
+    - /c/gnlscience/cyphers/websites/snapplify-ecommerce/docker/php/php-fpm.d/:/etc/php7/php-fpm.d
